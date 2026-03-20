@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PaperPage - 轻量级博客</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- 导航栏 -->
+    <header class="navbar">
+        <div class="container">
+            <h1 class="logo"><a href="index.html">PaperPage</a></h1>
+            <nav class="nav-links">
+                <a href="index.html">首页</a>
+                <a href="#categories">分类</a>
+                <a href="#tags">标签</a>
+                <button id="theme-toggle" class="theme-button">🌙</button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- 主要内容 -->
+    <main class="container">
+        <section class="hero">
+            <h2>欢迎来到 PaperPage</h2>
+            <p>一个基于 GitHub + Cloudflare Pages 的轻量级博客</p>
+        </section>
+
+        <section class="posts-list" id="posts">
+            <h3>最新文章</h3>
+            <div id="posts-container"></div>
+        </section>
+    </main>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 PaperPage. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
