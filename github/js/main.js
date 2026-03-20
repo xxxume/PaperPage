@@ -37,39 +37,52 @@ function initDarkMode() {
 }
 
 // 加载文章列表
-function loadPosts() {
+async function loadPosts() {
     const postsContainer = document.getElementById('posts-container');
     postsContainer.innerHTML = '<div class="loading"></div>';
     
-    // 模拟从 GitHub 仓库加载文章列表
-    // 实际部署时，这里会通过 GitHub API 获取 posts 目录下的文件
-    // 为了演示，我们使用模拟数据
-    setTimeout(() => {
-        // 模拟文章数据
-        posts = [
-            {
-                id: 'first-post',
-                title: '第一篇文章',
-                date: '2026-03-20',
-                category: '技术',
-                tags: ['前端', 'JavaScript'],
-                excerpt: '这是我的第一篇博客文章，介绍如何使用 GitHub + Cloudflare Pages 搭建轻量级博客。',
-                content: '# 第一篇文章\n\n这是我的第一篇博客文章，介绍如何使用 GitHub + Cloudflare Pages 搭建轻量级博客。\n\n## 什么是 PaperPage？\n\nPaperPage 是一个基于 GitHub + Cloudflare Pages 的轻量级博客系统，具有以下特点：\n\n- 纯静态，无需后端服务器\n- 支持 Markdown 编写文章\n- 响应式布局，适配电脑和手机\n- 简单的暗黑模式切换\n\n## 如何部署？\n\n1. 将代码提交到 GitHub 仓库\n2. 在 Cloudflare Pages 中设置自动部署\n3. 绑定自定义域名（可选）\n\n## 总结\n\nPaperPage 是一个简单易用的博客系统，适合个人开发者和技术爱好者使用。'
-            },
-            {
-                id: 'second-post',
-                title: 'Markdown 语法指南',
-                date: '2026-03-19',
-                category: '教程',
-                tags: ['Markdown', '写作'],
-                excerpt: '本文介绍 Markdown 的基本语法，帮助你快速上手 Markdown 写作。',
-                content: '# Markdown 语法指南\n\nMarkdown 是一种轻量级标记语言，易于学习和使用。本文介绍 Markdown 的基本语法。\n\n## 标题\n\n```markdown\n# 一级标题\n## 二级标题\n### 三级标题\n```\n\n## 列表\n\n### 无序列表\n\n- 项目 1\n- 项目 2\n- 项目 3\n\n### 有序列表\n\n1. 第一项\n2. 第二项\n3. 第三项\n\n## 链接\n\n[GitHub](https://github.com)\n\n## 图片\n\n![示例图片](https://via.placeholder.com/300)\n\n## 代码\n\n```javascript\nconsole.log('Hello, world!');\n```\n\n## 引用\n\n> 这是一段引用文字\n\n## 表格\n\n| 姓名 | 年龄 | 职业 |\n|------|------|------|\n| 张三 | 25 | 工程师 |\n| 李四 | 30 | 设计师 |'
-            }
-        ];
+    try {
+        // 从 GitHub 仓库加载文章列表
+        posts = await fetchPostsFromGithub();
+        
+        // 如果没有获取到文章，使用模拟数据
+        if (posts.length === 0) {
+            console.log('No posts found from GitHub API, using mock data');
+            useMockData();
+        }
         
         // 渲染文章列表
         renderPosts();
-    }, 1000);
+    } catch (error) {
+        console.error('Error loading posts:', error);
+        // 使用模拟数据作为后备
+        useMockData();
+        renderPosts();
+    }
+}
+
+// 使用模拟数据
+function useMockData() {
+    posts = [
+        {
+            id: 'first-post',
+            title: '第一篇文章',
+            date: '2026-03-20',
+            category: '技术',
+            tags: ['前端', 'JavaScript'],
+            excerpt: '这是我的第一篇博客文章，介绍如何使用 GitHub + Cloudflare Pages 搭建轻量级博客。',
+            content: '# 第一篇文章\n\n这是我的第一篇博客文章，介绍如何使用 GitHub + Cloudflare Pages 搭建轻量级博客。\n\n## 什么是 PaperPage？\n\nPaperPage 是一个基于 GitHub + Cloudflare Pages 的轻量级博客系统，具有以下特点：\n\n- 纯静态，无需后端服务器\n- 支持 Markdown 编写文章\n- 响应式布局，适配电脑和手机\n- 简单的暗黑模式切换\n\n## 如何部署？\n\n1. 将代码提交到 GitHub 仓库\n2. 在 Cloudflare Pages 中设置自动部署\n3. 绑定自定义域名（可选）\n\n## 总结\n\nPaperPage 是一个简单易用的博客系统，适合个人开发者和技术爱好者使用。'
+        },
+        {
+            id: 'second-post',
+            title: 'Markdown 语法指南',
+            date: '2026-03-19',
+            category: '教程',
+            tags: ['Markdown', '写作'],
+            excerpt: '本文介绍 Markdown 的基本语法，帮助你快速上手 Markdown 写作。',
+            content: '# Markdown 语法指南\n\nMarkdown 是一种轻量级标记语言，易于学习和使用。本文介绍 Markdown 的基本语法。\n\n## 标题\n\n```markdown\n# 一级标题\n## 二级标题\n### 三级标题\n```\n\n## 列表\n\n### 无序列表\n\n- 项目 1\n- 项目 2\n- 项目 3\n\n### 有序列表\n\n1. 第一项\n2. 第二项\n3. 第三项\n\n## 链接\n\n[GitHub](https://github.com)\n\n## 图片\n\n![示例图片](https://via.placeholder.com/300)\n\n## 代码\n\n```javascript\nconsole.log(\'Hello, world!\');\n```\n\n## 引用\n\n> 这是一段引用文字\n\n## 表格\n\n| 姓名 | 年龄 | 职业 |\n|------|------|------|\n| 张三 | 25 | 工程师 |\n| 李四 | 30 | 设计师 |'
+        }
+    ];
 }
 
 // 渲染文章列表
@@ -95,7 +108,7 @@ function renderPosts() {
 }
 
 // 加载文章详情
-function loadPost() {
+async function loadPost() {
     const urlParams = new URLSearchParams(window.location.search);
     const postId = urlParams.get('id');
     
@@ -107,8 +120,12 @@ function loadPost() {
     const postContent = document.getElementById('post-content');
     postContent.innerHTML = '<div class="loading"></div>';
     
-    // 模拟加载文章内容
-    setTimeout(() => {
+    try {
+        // 从 GitHub 仓库加载文章列表
+        if (posts.length === 0) {
+            posts = await fetchPostsFromGithub();
+        }
+        
         // 查找文章
         const post = posts.find(p => p.id === postId);
         
@@ -127,7 +144,10 @@ function loadPost() {
         } else {
             document.getElementById('post-content').innerHTML = '<p>文章不存在</p>';
         }
-    }, 1000);
+    } catch (error) {
+        console.error('Error loading post:', error);
+        document.getElementById('post-content').innerHTML = '<p>加载文章失败，请稍后重试</p>';
+    }
 }
 
 // Markdown 解析函数
@@ -163,11 +183,12 @@ function markdownToHtml(markdown) {
         .replace(/\n{3,}/gim, '\n\n');
 }
 
-// 模拟从 GitHub API 获取文章列表
-// 实际部署时，可以使用这个函数替换模拟数据
+// 从 GitHub API 获取文章列表
 async function fetchPostsFromGithub() {
     try {
-        const response = await fetch('https://api.github.com/repos/{username}/{repository}/contents/posts');
+        // 替换为实际的 GitHub 用户名和仓库名
+        // 这里使用正确的仓库地址
+        const response = await fetch('https://api.github.com/repos/asdfinstall/paperpage-blog/contents/posts');
         const files = await response.json();
         
         const posts = [];
@@ -195,7 +216,8 @@ async function fetchPostsFromGithub() {
                     date: frontmatter.date || file.updated_at,
                     category: frontmatter.category || '未分类',
                     tags: frontmatter.tags ? frontmatter.tags.split(',').map(tag => tag.trim()) : [],
-                    content: content
+                    content: content,
+                    excerpt: frontmatter.excerpt || content.substring(0, 150) + '...'
                 });
             }
         }
