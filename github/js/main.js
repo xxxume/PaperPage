@@ -124,6 +124,12 @@ async function loadPost() {
         // 从 GitHub 仓库加载文章列表
         if (posts.length === 0) {
             posts = await fetchPostsFromGithub();
+            
+            // 如果没有获取到文章，使用模拟数据
+            if (posts.length === 0) {
+                console.log('No posts found from GitHub API, using mock data');
+                useMockData();
+            }
         }
         
         // 查找文章
@@ -146,7 +152,27 @@ async function loadPost() {
         }
     } catch (error) {
         console.error('Error loading post:', error);
-        document.getElementById('post-content').innerHTML = '<p>加载文章失败，请稍后重试</p>';
+        // 使用模拟数据作为后备
+        useMockData();
+        
+        // 查找文章
+        const post = posts.find(p => p.id === postId);
+        
+        if (post) {
+            // 更新页面标题
+            document.getElementById('post-title').textContent = post.title;
+            document.getElementById('post-title-display').textContent = post.title;
+            
+            // 更新文章元数据
+            document.getElementById('post-date').textContent = post.date;
+            document.getElementById('post-category').textContent = post.category;
+            document.getElementById('post-tags').textContent = post.tags.join(', ');
+            
+            // 解析 Markdown 并显示内容
+            document.getElementById('post-content').innerHTML = markdownToHtml(post.content);
+        } else {
+            document.getElementById('post-content').innerHTML = '<p>文章不存在</p>';
+        }
     }
 }
 

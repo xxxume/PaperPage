@@ -8,6 +8,8 @@
     --nav-bg: #ffffff;
     --footer-bg: #f5f5f5;
     --shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    --transition: all 0.3s ease;
 }
 
 /* 暗黑模式 */
@@ -20,6 +22,7 @@ body.dark {
     --nav-bg: #222222;
     --footer-bg: #222222;
     --shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
 * {
@@ -33,7 +36,8 @@ body {
     line-height: 1.6;
     color: var(--text-color);
     background-color: var(--bg-color);
-    transition: all 0.3s ease;
+    transition: var(--transition);
+    scroll-behavior: smooth;
 }
 
 /* 容器 */
@@ -51,126 +55,205 @@ body {
     top: 0;
     z-index: 1000;
     box-shadow: var(--shadow);
+    backdrop-filter: blur(10px);
 }
 
 .navbar .container {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem 20px;
+    padding: 1.2rem 20px;
 }
 
 .logo a {
     color: var(--accent-color);
     text-decoration: none;
-    font-size: 1.5rem;
+    font-size: 1.8rem;
     font-weight: bold;
+    transition: var(--transition);
+}
+
+.logo a:hover {
+    transform: scale(1.05);
 }
 
 .nav-links {
     display: flex;
-    gap: 1.5rem;
+    gap: 2rem;
     align-items: center;
 }
 
 .nav-links a {
     color: var(--text-color);
     text-decoration: none;
-    transition: color 0.3s ease;
+    transition: var(--transition);
+    font-weight: 500;
+    position: relative;
+}
+
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: var(--accent-color);
+    transition: var(--transition);
 }
 
 .nav-links a:hover {
     color: var(--accent-color);
 }
 
+.nav-links a:hover::after {
+    width: 100%;
+}
+
 .theme-button {
     background: none;
     border: none;
-    font-size: 1.2rem;
+    font-size: 1.4rem;
     cursor: pointer;
     color: var(--text-color);
-    transition: transform 0.3s ease;
+    transition: var(--transition);
+    padding: 0.5rem;
+    border-radius: 50%;
 }
 
 .theme-button:hover {
-    transform: rotate(180deg);
+    transform: rotate(180deg) scale(1.1);
+    background-color: rgba(0, 0, 0, 0.1);
 }
 
 /* 英雄区域 */
 .hero {
-    padding: 4rem 0;
+    padding: 5rem 0;
     text-align: center;
     border-bottom: 1px solid var(--border-color);
+    background: linear-gradient(135deg, rgba(52, 152, 219, 0.05), rgba(52, 152, 219, 0.02));
 }
 
 .hero h2 {
-    font-size: 2.5rem;
-    margin-bottom: 1rem;
+    font-size: 3rem;
+    margin-bottom: 1.5rem;
     color: var(--accent-color);
+    font-weight: 700;
+    letter-spacing: -0.5px;
 }
 
 .hero p {
-    font-size: 1.2rem;
+    font-size: 1.3rem;
     color: var(--text-color);
     opacity: 0.8;
+    max-width: 800px;
+    margin: 0 auto;
 }
 
 /* 文章列表 */
 .posts-list {
-    padding: 2rem 0;
+    padding: 3rem 0;
 }
 
 .posts-list h3 {
-    font-size: 1.8rem;
-    margin-bottom: 1.5rem;
+    font-size: 2rem;
+    margin-bottom: 2rem;
     color: var(--text-color);
+    font-weight: 600;
+    position: relative;
+    padding-bottom: 1rem;
+}
+
+.posts-list h3::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 80px;
+    height: 3px;
+    background-color: var(--accent-color);
+    border-radius: 3px;
 }
 
 #posts-container {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 2rem;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 2.5rem;
 }
 
 .post-card {
     background-color: var(--card-bg);
-    border-radius: 8px;
-    padding: 1.5rem;
-    box-shadow: var(--shadow);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: var(--card-shadow);
+    transition: var(--transition);
+    border: 1px solid var(--border-color);
+    position: relative;
+    overflow: hidden;
+}
+
+.post-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, var(--accent-color), #8e44ad);
+    transform: scaleX(0);
+    transition: var(--transition);
 }
 
 .post-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transform: translateY(-8px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+.post-card:hover::before {
+    transform: scaleX(1);
 }
 
 .post-card h4 {
-    font-size: 1.2rem;
-    margin-bottom: 0.5rem;
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+    font-weight: 600;
 }
 
 .post-card h4 a {
     color: var(--text-color);
     text-decoration: none;
-    transition: color 0.3s ease;
+    transition: var(--transition);
+    display: block;
+    line-height: 1.4;
 }
 
 .post-card h4 a:hover {
     color: var(--accent-color);
+    transform: translateX(5px);
 }
 
 .post-card-meta {
     font-size: 0.9rem;
     color: var(--text-color);
     opacity: 0.7;
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.post-card-meta span {
+    background-color: rgba(52, 152, 219, 0.1);
+    padding: 0.3rem 0.8rem;
+    border-radius: 12px;
+    font-size: 0.85rem;
 }
 
 .post-card-excerpt {
     color: var(--text-color);
     opacity: 0.8;
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
 }
 
 .read-more {
@@ -178,110 +261,184 @@ body {
     color: var(--accent-color);
     text-decoration: none;
     font-weight: 500;
-    transition: all 0.3s ease;
+    transition: var(--transition);
+    position: relative;
+    padding-left: 1.2rem;
+}
+
+.read-more::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: var(--transition);
 }
 
 .read-more:hover {
-    text-decoration: underline;
     transform: translateX(5px);
+}
+
+.read-more:hover::before {
+    transform: translateY(-50%) translateX(5px);
 }
 
 /* 文章详情页 */
 .post {
-    padding: 2rem 0;
+    padding: 3rem 0;
     max-width: 800px;
     margin: 0 auto;
 }
 
 .post h2 {
-    font-size: 2rem;
-    margin-bottom: 1rem;
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
     color: var(--text-color);
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.5px;
 }
 
 .post-meta {
     display: flex;
-    gap: 1rem;
-    font-size: 0.9rem;
+    gap: 1.5rem;
+    font-size: 0.95rem;
     color: var(--text-color);
     opacity: 0.7;
-    margin-bottom: 2rem;
+    margin-bottom: 2.5rem;
     flex-wrap: wrap;
+    padding: 1rem;
+    background-color: var(--card-bg);
+    border-radius: 8px;
+    border-left: 4px solid var(--accent-color);
+}
+
+.post-meta span {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
 }
 
 .post-content {
     color: var(--text-color);
     line-height: 1.8;
+    padding: 2rem;
+    background-color: var(--card-bg);
+    border-radius: 12px;
+    box-shadow: var(--card-shadow);
 }
 
 .post-content h1, .post-content h2, .post-content h3, .post-content h4, .post-content h5, .post-content h6 {
-    margin-top: 2rem;
-    margin-bottom: 1rem;
+    margin-top: 2.5rem;
+    margin-bottom: 1.5rem;
     color: var(--text-color);
+    font-weight: 600;
+    line-height: 1.3;
+}
+
+.post-content h2 {
+    font-size: 1.8rem;
+    padding-bottom: 0.8rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.post-content h3 {
+    font-size: 1.5rem;
 }
 
 .post-content p {
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
+    text-align: justify;
 }
 
 .post-content ul, .post-content ol {
-    margin-bottom: 1rem;
-    padding-left: 2rem;
+    margin-bottom: 1.5rem;
+    padding-left: 2.5rem;
+}
+
+.post-content li {
+    margin-bottom: 0.5rem;
 }
 
 .post-content code {
-    background-color: var(--card-bg);
+    background-color: rgba(0, 0, 0, 0.1);
     padding: 0.2rem 0.4rem;
     border-radius: 4px;
     font-family: 'Courier New', Courier, monospace;
+    font-size: 0.9rem;
 }
 
 .post-content pre {
-    background-color: var(--card-bg);
-    padding: 1rem;
+    background-color: rgba(0, 0, 0, 0.05);
+    padding: 1.5rem;
     border-radius: 8px;
     overflow-x: auto;
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
+    border: 1px solid var(--border-color);
 }
 
 .post-content pre code {
     background: none;
     padding: 0;
+    font-size: 0.85rem;
 }
 
 .post-content img {
     max-width: 100%;
     height: auto;
     border-radius: 8px;
-    margin: 1rem 0;
+    margin: 2rem 0;
+    box-shadow: var(--card-shadow);
+    transition: var(--transition);
+}
+
+.post-content img:hover {
+    transform: scale(1.02);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
 }
 
 .back-link {
     display: inline-block;
-    margin-top: 2rem;
+    margin-top: 3rem;
     color: var(--accent-color);
     text-decoration: none;
     font-weight: 500;
-    transition: all 0.3s ease;
+    transition: var(--transition);
+    position: relative;
+    padding-left: 1.2rem;
+}
+
+.back-link::before {
+    content: '←';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: var(--transition);
 }
 
 .back-link:hover {
-    text-decoration: underline;
     transform: translateX(-5px);
+}
+
+.back-link:hover::before {
+    transform: translateY(-50%) translateX(-5px);
 }
 
 /* 页脚 */
 .footer {
     background-color: var(--footer-bg);
     border-top: 1px solid var(--border-color);
-    padding: 2rem 0;
-    margin-top: 2rem;
+    padding: 3rem 0;
+    margin-top: 3rem;
+    background: linear-gradient(135deg, rgba(52, 152, 219, 0.05), rgba(52, 152, 219, 0.02));
 }
 
 .footer p {
     text-align: center;
     color: var(--text-color);
     opacity: 0.7;
+    font-size: 1rem;
 }
 
 /* 响应式设计 */
@@ -295,34 +452,72 @@ body {
     .nav-links {
         flex-wrap: wrap;
         justify-content: center;
-        gap: 1rem;
+        gap: 1.5rem;
+    }
+
+    .hero {
+        padding: 3rem 0;
     }
 
     .hero h2 {
-        font-size: 2rem;
+        font-size: 2.2rem;
     }
 
     .hero p {
-        font-size: 1rem;
+        font-size: 1.1rem;
+    }
+
+    .posts-list {
+        padding: 2rem 0;
+    }
+
+    .posts-list h3 {
+        font-size: 1.8rem;
     }
 
     #posts-container {
         grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .post-card {
+        padding: 1.5rem;
+    }
+
+    .post {
+        padding: 2rem 0;
     }
 
     .post h2 {
-        font-size: 1.8rem;
+        font-size: 2rem;
     }
 
     .post-meta {
         flex-direction: column;
-        gap: 0.5rem;
+        gap: 0.8rem;
+        align-items: flex-start;
+    }
+
+    .post-content {
+        padding: 1.5rem;
     }
 }
 
 @media (max-width: 480px) {
     .container {
         padding: 0 15px;
+    }
+
+    .navbar .container {
+        padding: 0.8rem;
+    }
+
+    .logo a {
+        font-size: 1.5rem;
+    }
+
+    .nav-links {
+        gap: 1rem;
     }
 
     .hero {
@@ -333,16 +528,40 @@ body {
         font-size: 1.8rem;
     }
 
+    .hero p {
+        font-size: 1rem;
+    }
+
     .posts-list {
-        padding: 1rem 0;
+        padding: 1.5rem 0;
+    }
+
+    .posts-list h3 {
+        font-size: 1.5rem;
     }
 
     .post-card {
-        padding: 1rem;
+        padding: 1.2rem;
+    }
+
+    .post-card h4 {
+        font-size: 1.2rem;
     }
 
     .post {
-        padding: 1rem 0;
+        padding: 1.5rem 0;
+    }
+
+    .post h2 {
+        font-size: 1.8rem;
+    }
+
+    .post-content {
+        padding: 1.2rem;
+    }
+
+    .footer {
+        padding: 2rem 0;
     }
 }
 
@@ -351,14 +570,14 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 2rem;
+    padding: 3rem;
 }
 
 .loading::after {
     content: '';
-    width: 24px;
-    height: 24px;
-    border: 2px solid var(--border-color);
+    width: 32px;
+    height: 32px;
+    border: 3px solid var(--border-color);
     border-top-color: var(--accent-color);
     border-radius: 50%;
     animation: spin 1s linear infinite;
@@ -366,4 +585,42 @@ body {
 
 @keyframes spin {
     to { transform: rotate(360deg); }
+}
+
+/* 滚动条样式 */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-color);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--accent-color);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #2980b9;
+}
+
+/* 渐入动画 */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.post-card {
+    animation: fadeIn 0.5s ease-out;
+}
+
+.post {
+    animation: fadeIn 0.5s ease-out;
 }
