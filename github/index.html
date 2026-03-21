@@ -25,18 +25,87 @@
         <section class="hero">
             <h2>欢迎来到 PaperPage</h2>
             <p>一个基于 GitHub + Cloudflare Pages 的轻量级博客</p>
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <span class="stat-number">2</span>
+                    <span class="stat-label">文章</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">2</span>
+                    <span class="stat-label">分类</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">4</span>
+                    <span class="stat-label">标签</span>
+                </div>
+            </div>
         </section>
 
-        <section class="posts-list" id="posts">
-            <h3>最新文章</h3>
-            <div id="posts-container"></div>
-        </section>
+        <div class="content-grid">
+            <section class="posts-list" id="posts">
+                <h3>最新文章</h3>
+                <div id="posts-container"></div>
+            </section>
+
+            <aside class="sidebar">
+                <div class="sidebar-section">
+                    <h4>关于博客</h4>
+                    <p>PaperPage 是一个基于 GitHub + Cloudflare Pages 的轻量级博客系统，支持 Markdown 编写文章，响应式布局，适配各种设备。</p>
+                </div>
+
+                <div class="sidebar-section" id="categories">
+                    <h4>分类</h4>
+                    <ul class="category-list">
+                        <li><a href="#">技术 (1)</a></li>
+                        <li><a href="#">教程 (1)</a></li>
+                    </ul>
+                </div>
+
+                <div class="sidebar-section" id="tags">
+                    <h4>标签</h4>
+                    <div class="tag-cloud">
+                        <a href="#" class="tag">前端</a>
+                        <a href="#" class="tag">JavaScript</a>
+                        <a href="#" class="tag">Markdown</a>
+                        <a href="#" class="tag">写作</a>
+                    </div>
+                </div>
+
+                <div class="sidebar-section">
+                    <h4>最近文章</h4>
+                    <ul class="recent-posts">
+                        <li><a href="post.html?id=first-post">第一篇文章</a></li>
+                        <li><a href="post.html?id=second-post">Markdown 语法指南</a></li>
+                    </ul>
+                </div>
+            </aside>
+        </div>
     </main>
 
     <!-- 页脚 -->
     <footer class="footer">
         <div class="container">
-            <p>&copy; 2026 PaperPage. All rights reserved.</p>
+            <div class="footer-content">
+                <div class="footer-about">
+                    <h4>PaperPage</h4>
+                    <p>一个简单易用的轻量级博客系统</p>
+                </div>
+                <div class="footer-links">
+                    <h4>快速链接</h4>
+                    <ul>
+                        <li><a href="index.html">首页</a></li>
+                        <li><a href="#categories">分类</a></li>
+                        <li><a href="#tags">标签</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h4>联系我</h4>
+                    <p>GitHub: <a href="https://github.com" target="_blank">github.com</a></p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 PaperPage. All rights reserved.</p>
+            </div>
         </div>
     </footer>
 

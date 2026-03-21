@@ -6,6 +6,9 @@ document.addEventListener('DOMContentLoaded', function() {
     // 初始化暗黑模式
     initDarkMode();
     
+    // 初始化分享模态框
+    initShareModal();
+    
     // 检查当前页面
     if (window.location.pathname.includes('post.html')) {
         // 文章详情页
@@ -15,6 +18,48 @@ document.addEventListener('DOMContentLoaded', function() {
         loadPosts();
     }
 });
+
+// 初始化分享模态框
+function initShareModal() {
+    const shareButton = document.querySelector('.share-button');
+    const shareModal = document.getElementById('share-modal');
+    const modalClose = document.querySelector('.modal-close');
+    const copyButton = document.querySelector('.share-button-copy');
+    
+    if (shareButton && shareModal) {
+        // 打开模态框
+        shareButton.addEventListener('click', function() {
+            shareModal.style.display = 'flex';
+        });
+        
+        // 关闭模态框
+        if (modalClose) {
+            modalClose.addEventListener('click', function() {
+                shareModal.style.display = 'none';
+            });
+        }
+        
+        // 点击模态框外部关闭
+        shareModal.addEventListener('click', function(e) {
+            if (e.target === shareModal) {
+                shareModal.style.display = 'none';
+            }
+        });
+        
+        // 复制链接
+        if (copyButton) {
+            copyButton.addEventListener('click', function() {
+                const currentUrl = window.location.href;
+                navigator.clipboard.writeText(currentUrl).then(function() {
+                    alert('链接已复制到剪贴板');
+                    shareModal.style.display = 'none';
+                }).catch(function(err) {
+                    console.error('复制失败:', err);
+                });
+            });
+        }
+    }
+}
 
 // 初始化暗黑模式
 function initDarkMode() {
